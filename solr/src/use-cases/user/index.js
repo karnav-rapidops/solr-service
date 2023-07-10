@@ -20,6 +20,7 @@ const insertUser = makeInsertUser({
     insertUserDb: userDbMethods.insertUser,
     checkCollection: collection.checkCollection,
     createCollection: collection.createCollection,
+    insertCollection: collection.insertCollection,
     validationError,
     Joi,
 })

@@ -1,6 +1,7 @@
 module.exports = function makeInsertUser({
     insertUserDb,
     checkCollection,
+    insertCollection,
     createCollection,
     validationError,
     Joi,
@@ -15,6 +16,7 @@ module.exports = function makeInsertUser({
         if(!isCollectionExist)
         {
             await createCollection({ collectionName: languageName, numShards: 1 , replicationFactor: 1 })
+            await insertCollection({ collectionName });
         }
 
         return await insertUserDb({ documents, languageName })

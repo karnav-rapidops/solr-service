@@ -6,6 +6,7 @@ module.exports = function makeCollectionDb({
 }) {
     return Object.freeze({
         checkCollection,
+        insertCollection,
     })
 
     async function checkCollection({ collectionName })
@@ -18,6 +19,17 @@ module.exports = function makeCollectionDb({
 
         } catch (error) {
             throw new databaseError(error.message);
+        }
+    }
+    async function insertCollection({ collectionName })
+    {
+        try {
+            const result = await pool.query(`INSERT INTO ${collectionTable} (name) VALUES ($1) RETURNING id`, [collectionName]);
+
+            return result?.rows[0]?.id;
+            
+        } catch (error) {
+            
         }
     }
 }
