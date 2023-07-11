@@ -7,6 +7,7 @@ module.exports = function makeInsertUserAction({
             const documents = req.body;
             const languageName = req.headers.language;
 
+            console.log("insert-user-controller:", languageName);
             
             await insertUser({ documents, languageName });
     

@@ -5,27 +5,33 @@ module.exports = function makeCreateCollection({
 }) {
     return async function createCollection({ collectionName, numShards, replicationFactor })
     {
-        const url = 'http://localhost:8983/solr/admin/collections';
-
-        validateInputData(collectionName, numShards, replicationFactor);
+        const url = 'http://localhost:8983/api/collections';
 
         const data = {
-            action: 'CREATE',
+            create: {
             name: collectionName,
             numShards: numShards,
             replicationFactor: replicationFactor,
+        },
+        };
+
+        const headers = {
+            'Content-Type': 'application/json',
         };
 
         try {
-            await axios.post(url, data);
+            const response = await axios.post(url, data, { headers });
             console.log(`Collection ${collectionName} created successfully.`);
-            
+            console.log(response.data); 
         } catch (error) {
-            console.error('Error creating Solr collection:', error);
+            console.error('Error creating Solr collection:', error.response.data);
         }
+
     }
 
     function validateInputData({ collectionName, numShards, replicationFactor }) {
+
+        console.log("in val fun : ", collectionName);
 
         const schema = Joi.object({
             collectionName: Joi.string().required(),

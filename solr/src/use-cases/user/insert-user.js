@@ -11,12 +11,13 @@ module.exports = function makeInsertUser({
 
         validateInputData({ documents, languageName })
 
-        const isCollectionExist = await checkCollection({ languageName });
+        const isCollectionExist = await checkCollection({ collectionName: languageName });
+        console.log("HHHHHHHHHHHH",isCollectionExist);
 
         if(!isCollectionExist)
         {
             await createCollection({ collectionName: languageName, numShards: 1 , replicationFactor: 1 })
-            await insertCollection({ collectionName });
+            await insertCollection({ collectionName: languageName });
         }
 
         return await insertUserDb({ documents, languageName })
